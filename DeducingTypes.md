@@ -98,3 +98,9 @@ decltype(auto f2()
 })
 ```
 * Functions returning lvalues, always return lvalue references. ???
+
+## Item 4 : Know how to view deduced types
+* Use IDE to hover over variables to get types.
+* Use type in a way that leads to compilation errors and then see the error.
+* `typeid()` yields a `type_info` object, whose `name` member can be used to view the type name. Not always accurate.
+* `boost::typeindex::type_id_with_cvr` which yields a `boost::typeindex::type_index` object whose `pretty_name` member function does a better job.
