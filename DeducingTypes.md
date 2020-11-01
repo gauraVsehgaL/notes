@@ -57,3 +57,44 @@ auto getList(){
 auto lamb = [](auto param){};
 lamb({1,2,3}); //error, can't deduce type.
 ```
+
+## Item 3 : decltype
+* Given a name or expression, `declytype` tells us the name's or expression's type.
+```C++
+vector<int> v;
+decltype(v[0]) // is int&
+```
+* `decltype` primarily use is for declaring function templates where the funtion's return type depends on its parameter types.
+```C++
+template<typename Container, typename Index>
+auto Foo(Container &c, Index i) -> decltype(c[i]){
+    return c[i];
+}
+```
+* A function's trailing return type has the advantage that the function's parameters can be used in the specification of the return type.
+* For functions with an auto return type specification, compilers employ template type deduction. Also during template type deduction, the reference-ness of the initializing expression is ignored. So if a function with auto return type, returns a reference, it will be ignored.
+```c++
+auto Foo()
+{
+    vector<int> v;
+    return v[2];// expr is int &, and & will be dropped and return type will be deduced as int
+}
+
+Foo()=5;    // won't compile since lhs is an rvalue.
+```
+* To solve this problem use `decltype(auto)` as return type. Here `auto` specifies that the type is to be deduced, and `decltype` says that `decltype` rules should be used during the deduction.
+* The use of `decltype(auto)` is not limited to function return types. It can also be convenient for declaring variables when you want to apply the `decltype` type deduction rules to the initializing expression.
+* For lvalue expressions of type T other than names(x vs (x)), decltype always reports a type of T&.
+```C++
+decltype(auto) f1(){
+    int x;
+    return x;//decltype(x) is int, so f1 returns int
+}
+
+decltype(auto f2()
+{
+    int x;
+    return (x);//decltype((x)) is int&, so f2 returns int&
+})
+```
+* Functions returning lvalues, always return lvalue references. ???
