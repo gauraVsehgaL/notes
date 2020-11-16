@@ -4,7 +4,7 @@
 * Distinction between *parameters* and *arguments* is important since paramters are lvalues, whereas arguments with which they are initialized can be lvalues or rvalues.
 * *Perfect forwarding* - an argument is passed to a function such that the original argument's rvalueness is preserved.
 *  **Definition** includes provide the storage locations or implementation details.
-* **Declarations** intoduce *names* and *types* without giving details, such as where storage is located or how things are implemented.
+* **Declarations** introduce *names* and *types* without giving details, such as where storage is located or how things are implemented.
 
 
  
